@@ -1,0 +1,81 @@
+﻿@model  Data.Entity.Cliente
+
+@using (Html.BeginForm("Cliente", "Clientes"))
+{
+    @Html.HiddenFor(model => model.ClienteId)
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Cliente
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="col-lg-3">
+                            <label>
+                                Nome:
+                            </label>
+                            @Html.EditorFor(model => model.Nome)
+                        </div>
+                        <div class="col-lg-3">
+                            <label>
+                                E-Mail:
+                            </label>
+                            @Html.EditorFor(model => model.Email)
+                        </div>
+                        <div class="col-lg-4">
+                            <label>
+                                Logotipo:
+                            </label>
+                            @Html.EditorFor(model => model.Logotipo)
+                        </div>
+                    </div>
+                    <div class="col-lg-12 text-right">
+                        <input type="submit" value="Salvar" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@if (Model != null && Model.ClienteId != 0)
+{
+    @Html.Action("_logradouro", new {clienteId = Model.ClienteId})
+}
+
+<script>
+
+    var logradoroId = 0;
+
+    function EditarLogradoro(logradoroNome, _logradoroId) {
+
+        document.getElementById("LogradouroNome").value = logradoroNome;
+        logradoroId = _logradoroId;
+    }
+
+    function EnviarLogradoro() {
+
+        var logradouroNome = document.getElementById("LogradouroNome").value;
+        var clienteId = $("#ClienteId").val();
+
+        $.ajax({
+            url: "/Clientes/_logradouro",
+            data: { logradouroId: logradoroId, logradouroNome: logradouroNome, clienteId: clienteId },
+            type: "post",
+            error: function (XMLHttpRequest, txtStatus, errorThrown) {
+                alert("Houve erro ao cadastrar o logradouro." + errorThrown);
+            },
+            success: function (data, textStatus, XMLHttpRequest) {
+                window.location.href = "/Clientes/Cliente/" + clienteId;
+            }
+        })
+    }
+
+</script>
+
+
+
+

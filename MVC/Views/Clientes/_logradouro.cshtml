@@ -1,0 +1,54 @@
+﻿@model  List<Data.Entity.Logradouro>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Logradouro
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <div class="col-lg-7">
+                        <label>
+                            Logradouro:
+                        </label>
+                        <input type="text" id="LogradouroNome" name="LogradouroNome" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 text-right" style="margin-right:8px">
+                        <input type="button" onclick="EnviarLogradoro()" value="Salvar" class="btn btn-success" />
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <table class="table-bordered table-hover table">
+                        <tr>
+                            <th>
+                                Logradouro ID
+                            </th>
+                            <th>
+                                Logradouro
+                            </th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.LogradouroId
+                                </td>
+                                <td>
+                                    @item.LogradouroNome
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Deletar", "DeleteLogradoro", new { id = item.LogradouroId, clienteId = item.ClienteId }, new { @class = "text-danger" })
+                                    <label>/</label>
+                                    <a onclick="EditarLogradoro( '@item.LogradouroNome' , '@item.LogradouroId.ToString()' )">Editar</a>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
